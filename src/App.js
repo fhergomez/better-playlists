@@ -3,7 +3,13 @@ import './App.css';
 
 let defaultStyle = {
   color: '#fff'
-}
+};
+
+let fakeServerData = {
+  user: {
+    name: 'Fernando'
+  } 
+};
 
 class Aggreagate extends Component {
   render() {
@@ -27,7 +33,7 @@ class Filter extends Component {
 }
 
 class PlayList extends Component {
-  render(){
+  render(){ 
     return (
       <div style={{...defaultStyle, display: 'inline-block', width: '25%'}}>
         <img />
@@ -39,10 +45,20 @@ class PlayList extends Component {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {serverData: {}}
+  }
+  componentDidMount() {
+    this.setState({serverData: fakeServerData});
+  }
   render() {
     return (
       <div className="App">
-        <h1 style={{...defaultStyle, 'font-size': '54px'}}>Title</h1>
+        <h1 style={{...defaultStyle, 'font-size': '54px'}}>
+          {this.state.serverData.user && 
+            this.state.serverData.user.name}'s Playlist
+        </h1>
         <Aggreagate/>
         <Aggreagate/>
         <Filter/>
