@@ -7,7 +7,25 @@ let defaultStyle = {
 
 let fakeServerData = {
   user: {
-    name: 'Fernando'
+    name: 'Fernando',
+    playlists: [
+      {
+        name: 'My favorites',
+        songs: ['Beat It','Billy Jean','Hasta la Raiz','Aventurera']
+      },
+      {
+        name: 'Discover Weekly',
+        songs: ['Le song', 'The Song','Sången']
+      },
+      {
+        name: 'Valentine\'s Day Songs',
+        songs: ['Si tu supieras','Abrazame','Querida']
+      },
+      {
+        name: 'Road Trip',
+        songs: ['Aventurera','Hasta la Raiz','Perfume de Gardenia','Farolito']
+      }
+    ]
   } 
 };
 
@@ -15,7 +33,7 @@ class Aggreagate extends Component {
   render() {
     return (
       <div style={{...defaultStyle, width: '40%', display: 'inline-block'}}>
-        <h2 style={{...defaultStyle}}>Number Text</h2>
+        <h2>{this.props.playlists && this.props.playlists.length} Text</h2>
       </div>
     );
   }
@@ -50,22 +68,29 @@ class App extends Component {
     this.state = {serverData: {}}
   }
   componentDidMount() {
-    this.setState({serverData: fakeServerData});
+    setTimeout(() => {
+      this.setState({serverData: fakeServerData});
+    }, 1000); 
   }
   render() {
     return (
       <div className="App">
-        <h1 style={{...defaultStyle, 'font-size': '54px'}}>
+        {this.state.serverData.user ?
+        <div>
+          <h1 style={{...defaultStyle, 'font-size': '54px'}}>
           {this.state.serverData.user && 
             this.state.serverData.user.name}'s Playlist
-        </h1>
-        <Aggreagate/>
-        <Aggreagate/>
-        <Filter/>
-        <PlayList/>
-        <PlayList/>
-        <PlayList/>
-        <PlayList/>
+          </h1>
+            <Aggreagate playlists="{this.state.serverData.user.playlists}"/>
+            <Aggreagate/>
+
+          <Filter/>
+          <PlayList/>
+          <PlayList/>
+          <PlayList/>
+          <PlayList/>
+        </div> : <h1>'Loading...'</h1>
+        }
       </div>
     );
   }
